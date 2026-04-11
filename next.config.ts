@@ -1,4 +1,9 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const nextConfig: NextConfig = {
   turbopack: {
@@ -37,4 +42,4 @@ const nextConfig: NextConfig = {
   // rewrites와 redirects도 제거 (사용하지 않는 경우)
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
