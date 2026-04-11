@@ -49,7 +49,7 @@ const ApplicationProfile = ({ data }: ApplicationProfileProps) => {
           <div className="flex items-center justify-between border-b border-gray-200 py-14">
             <span className="text-gray-400">연락처</span>
             <span className="font-medium">
-              {formatPhoneNumber(phoneNumber, true)}
+              {formatPhoneNumber(phoneNumber)}
             </span>
           </div>
 
