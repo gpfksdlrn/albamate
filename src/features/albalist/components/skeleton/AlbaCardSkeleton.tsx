@@ -20,15 +20,6 @@ const AlbaCardSkeleton = () => {
         <div className="h-5 w-5 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
       </div>
 
-      {/* 위치 정보 (추가) */}
-      <div className="mt-8 flex items-center gap-2">
-        <div className="h-4 w-4 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
-        <div className="h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
-      </div>
-
-      {/* 시급 정보 (추가) */}
-      <div className="mt-4 h-5 w-20 animate-pulse rounded bg-gray-200 dark:bg-gray-700" />
-
       {/* 하단 통계 정보 */}
       <div className="mt-20 flex h-40 w-full justify-center rounded-lg bg-gray-25 lg:h-45 dark:bg-gray-800">
         <div className="relative flex flex-1 items-center justify-center">
