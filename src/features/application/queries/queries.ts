@@ -7,6 +7,7 @@ import {
 import { AxiosResponse } from 'axios';
 import { useSession } from 'next-auth/react';
 
+import { albaKeys } from '@/features/albalist/queries/queries';
 import { AlbaItemDetail } from '@/shared/types/albaDetail';
 
 import { useApplicationDetailApi } from '../api/applicationDetail';
@@ -26,7 +27,7 @@ export const useAlbaformDetailQuery = (
   const api = useApplicationDetailApi();
 
   return useQuery({
-    queryKey: ['albaDetail', Number(formId)],
+    queryKey: albaKeys.detail(Number(formId)),
     queryFn: async () => {
       const response = await api.getAlbaformDetail(formId);
       return response.data;
@@ -171,6 +172,14 @@ export const useUpdateApplicationStatusMutation = (
       await queryClient.cancelQueries({ queryKey: ['applicationById'] });
       await queryClient.cancelQueries({ queryKey: ['myApplication'] });
 
+      // 롤백을 위해 이전 데이터 저장
+      const previousAppById = queryClient.getQueriesData<
+        Record<string, unknown>
+      >({ queryKey: ['applicationById'] });
+      const previousMyApp = queryClient.getQueriesData<Record<string, unknown>>(
+        { queryKey: ['myApplication'] }
+      );
+
       // 업데이트 함수
       const updateData = (
         old: Record<string, unknown> | undefined
@@ -193,6 +202,8 @@ export const useUpdateApplicationStatusMutation = (
       queryClient.setQueriesData({ queryKey: ['applicationById'] }, updateData);
 
       queryClient.setQueriesData({ queryKey: ['myApplication'] }, updateData);
+
+      return { previousAppById, previousMyApp };
     },
     onSettled: (data, error, variables, context) => {
       // 성공/실패 상관없이 서버에서 최신 데이터 가져오기
@@ -209,6 +220,17 @@ export const useUpdateApplicationStatusMutation = (
       options.onSuccess?.(data, variables, context);
     },
     onError: (error, variables, context) => {
+      // 낙관적 업데이트 롤백
+      if (context?.previousAppById) {
+        context.previousAppById.forEach(([key, data]) => {
+          queryClient.setQueryData(key, data);
+        });
+      }
+      if (context?.previousMyApp) {
+        context.previousMyApp.forEach(([key, data]) => {
+          queryClient.setQueryData(key, data);
+        });
+      }
       options.onError?.(error, variables, context);
     },
   });

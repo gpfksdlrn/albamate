@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
+import { albaKeys } from '@/features/albalist/queries/queries';
 import { useAuthSession } from '@/features/auth';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import { usePopupStore } from '@/shared/store/popupStore';
@@ -27,7 +28,7 @@ const FloatingButtons = ({ formId }: Props) => {
 
   // 알바 상세 데이터에서 스크랩 상태 확인
   useEffect(() => {
-    const albaDetailData = queryClient.getQueryData(['albaDetail', formId]);
+    const albaDetailData = queryClient.getQueryData(albaKeys.detail(formId));
     if (
       albaDetailData &&
       typeof albaDetailData === 'object' &&
@@ -92,8 +93,8 @@ const FloatingButtons = ({ formId }: Props) => {
 
       // 강제로 모든 관련 쿼리를 다시 불러오기
       await Promise.all([
-        queryClient.refetchQueries({ queryKey: ['albaList'] }),
-        queryClient.refetchQueries({ queryKey: ['albaDetail', formId] }),
+        queryClient.refetchQueries({ queryKey: albaKeys.lists() }),
+        queryClient.refetchQueries({ queryKey: albaKeys.detail(formId) }),
       ]);
     } catch (error: any) {
       if (error?.response?.status !== 401) {

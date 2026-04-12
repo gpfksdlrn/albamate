@@ -8,6 +8,7 @@ import {
   CreateFormRequest,
   createFormResponseSchema,
 } from '@/features/addform/schema/addform.schema';
+import { albaKeys } from '@/features/albalist/queries/queries';
 
 export const useAddformMutation = () => {
   const { postAddform } = useAddformApi();
@@ -25,9 +26,9 @@ export const useAddformMutation = () => {
         return;
       }
       queryClient.invalidateQueries({
-        queryKey: ['albaDetail', parseResponse.data.id],
+        queryKey: albaKeys.detail(parseResponse.data.id),
       });
-      queryClient.invalidateQueries({ queryKey: ['Albalist'] });
+      queryClient.invalidateQueries({ queryKey: albaKeys.lists() });
       router.push(`/alba/${parseResponse.data.id}`);
     },
     onError: error => {
@@ -58,9 +59,9 @@ export const useEditformMutation = () => {
         return;
       }
       queryClient.invalidateQueries({
-        queryKey: ['albaDetail', parseResponse.data.id],
+        queryKey: albaKeys.detail(parseResponse.data.id),
       });
-      queryClient.invalidateQueries({ queryKey: ['Albalist'] });
+      queryClient.invalidateQueries({ queryKey: albaKeys.lists() });
       router.push(`/alba/${parseResponse.data.id}`);
     },
     onError: error => {

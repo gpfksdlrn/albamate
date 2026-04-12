@@ -8,6 +8,7 @@ import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 
 import useAlbaListApi from '../api/albaListApi';
+import { albaKeys } from '../queries/queries';
 import { convertFiltersToApiParams } from '../utils/filterUtils';
 import AlbaFilterBar from './AlbaFilterBar';
 import InfiniteScroll from './InfiniteScroll';
@@ -49,10 +50,7 @@ const AlbaListPage = ({ session }: { session: Session | null }) => {
     [filters]
   );
 
-  const queryKey = useMemo(
-    () => ['albaList', 'infinite', apiParams] as const,
-    [apiParams]
-  );
+  const queryKey = useMemo(() => albaKeys.listInfinite(apiParams), [apiParams]);
 
   // 공용 무한스크롤 훅 사용
   const {

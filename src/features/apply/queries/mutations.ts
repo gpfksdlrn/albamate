@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
+import { albaKeys } from '@/features/albalist/queries/queries';
 import { postApplication, postResume } from '@/features/apply/api';
 import {
   CreateApplicationRequest,
@@ -32,9 +33,9 @@ export const useApplyMutation = () => {
         );
         return;
       }
-      queryClient.invalidateQueries({ queryKey: ['Albalist'] });
+      queryClient.invalidateQueries({ queryKey: albaKeys.lists() });
       queryClient.invalidateQueries({
-        queryKey: ['albaDetail', variables.formId],
+        queryKey: albaKeys.detail(variables.formId),
       });
       // 회원은 지원 상세 페이지로, 비회원은 알바폼 상세 페이지로
       if (parseResponse.data.applicantId) {

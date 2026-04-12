@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useAlbaListApi from '@/features/albalist/api/albaListApi';
+import { albaKeys } from '@/features/albalist/queries/queries';
 import { useSessionUtils } from '@/shared/lib/auth/use-session-utils';
 import useModalStore from '@/shared/store/useModalStore';
 import { getDDayString } from '@/shared/utils/format';
@@ -34,7 +35,7 @@ const AlbaPage = () => {
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ['albaDetail', Number(formId)],
+    queryKey: albaKeys.detail(Number(formId)),
     queryFn: () => getAlbaDetail(Number(formId)).then(res => res.data),
   });
 

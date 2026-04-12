@@ -13,11 +13,22 @@ export interface AlbaQueryParams {
   isRecruiting?: boolean;
 }
 
+// 쿼리 키 팩토리
+export const albaKeys = {
+  all: ['alba'] as const,
+  lists: () => [...albaKeys.all, 'list'] as const,
+  list: (params: AlbaQueryParams) => [...albaKeys.lists(), params] as const,
+  listInfinite: (params: Record<string, unknown>) =>
+    [...albaKeys.lists(), 'infinite', params] as const,
+  details: () => [...albaKeys.all, 'detail'] as const,
+  detail: (id: number) => [...albaKeys.details(), id] as const,
+};
+
 export const useAlbalistQuery = (params: AlbaQueryParams = { limit: 10 }) => {
   const { getAlbas } = useAlbaListApi();
 
   return useQuery<AlbaItem[], Error>({
-    queryKey: ['Albalist', params],
+    queryKey: albaKeys.list(params),
     queryFn: async () => {
       // 타입 안정성 보장
       const res = await getAlbas(params);
