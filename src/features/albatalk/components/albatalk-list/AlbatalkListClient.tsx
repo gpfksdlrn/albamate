@@ -9,6 +9,7 @@ import EmptyCard from '@/shared/components/common/EmptyCard';
 import { useInfiniteScroll } from '@/shared/hooks/useInfiniteScroll';
 
 import { fetchAlbatalks } from '../../api/albatalkApi';
+import { albatalkKeys } from '../../hooks/useAlbatalk';
 import type { GetAlbatalksParams } from '../../schemas/albatalk.schema';
 import AlbatalkItem from '../albatalk-item';
 import AlbatalkFilterBar from './AlbatalkFilterBar';
@@ -37,12 +38,7 @@ const AlbatalkListClient = ({ initialParams }: AlbatalkListClientProps) => {
     refetch,
   } = useInfiniteScroll({
     mode: 'cursor',
-    queryKey: [
-      'albatalks',
-      params.limit,
-      params.orderBy || 'mostRecent',
-      params.keyword || '',
-    ],
+    queryKey: albatalkKeys.listInfinite(params),
     fetcher: async (fetchParams: GetAlbatalksParams) => {
       const { cursor, ...otherParams } = fetchParams;
       const apiParams = cursor ? { ...otherParams, cursor } : otherParams;

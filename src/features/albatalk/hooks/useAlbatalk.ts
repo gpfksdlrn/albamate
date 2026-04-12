@@ -29,12 +29,16 @@ export const albatalkKeys = {
   lists: () => [...albatalkKeys.all, 'list'] as const,
   list: (params: GetAlbatalksParams) =>
     [...albatalkKeys.lists(), params] as const,
+  listInfinite: (params: GetAlbatalksParams) =>
+    [...albatalkKeys.lists(), 'infinite', params] as const,
   details: () => [...albatalkKeys.all, 'detail'] as const,
   detail: (id: number) => [...albatalkKeys.details(), id] as const,
   comments: (postId: number) =>
     [...albatalkKeys.all, 'comments', postId] as const,
   commentsList: (postId: number, params?: GetCommentsParams) =>
     [...albatalkKeys.comments(postId), 'list', params] as const,
+  commentsInfinite: (postId: number) =>
+    [...albatalkKeys.comments(postId), 'infinite'] as const,
 };
 
 /**
@@ -76,7 +80,7 @@ export const useCreateAlbatalk = () => {
       createAlbatalk(params, authAxios),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['albatalks'],
+        queryKey: albatalkKeys.lists(),
         exact: false,
       });
     },
@@ -105,7 +109,7 @@ export const useUpdateAlbatalk = () => {
       });
 
       queryClient.invalidateQueries({
-        queryKey: ['albatalks'],
+        queryKey: albatalkKeys.lists(),
         exact: false,
       });
     },
@@ -129,7 +133,7 @@ export const useDeleteAlbatalk = () => {
         queryKey: albatalkKeys.detail(postId),
       });
       queryClient.invalidateQueries({
-        queryKey: ['albatalks'],
+        queryKey: albatalkKeys.lists(),
         exact: false,
       });
       queryClient.removeQueries({
@@ -158,7 +162,7 @@ export const useAddAlbatalkLike = () => {
       });
       // 게시글 목록 쿼리 무효화
       queryClient.refetchQueries({
-        queryKey: ['albatalks'],
+        queryKey: albatalkKeys.lists(),
         exact: false,
       });
     },
@@ -182,7 +186,7 @@ export const useRemoveAlbatalkLike = () => {
         queryKey: albatalkKeys.detail(postId),
       });
       queryClient.refetchQueries({
-        queryKey: ['albatalks'],
+        queryKey: albatalkKeys.lists(),
         exact: false,
       });
     },
@@ -227,7 +231,7 @@ export const useCreateAlbatalkComment = () => {
     onSuccess: (_, { postId }) => {
       // 무한 스크롤 댓글 쿼리도 무효화
       queryClient.invalidateQueries({
-        queryKey: ['albatalk', 'comments', postId, 'infinite'],
+        queryKey: albatalkKeys.commentsInfinite(postId),
       });
 
       // 게시글 상세 정보도 무효화 (댓글 수 업데이트를 위해)
@@ -253,7 +257,7 @@ export const useAlbatalkCommentsInfinite = (postId: number) => {
 
   return useInfiniteScroll({
     mode: 'page',
-    queryKey: ['albatalk', 'comments', postId, 'infinite'],
+    queryKey: albatalkKeys.commentsInfinite(postId),
     fetcher: (params: GetCommentsParams) =>
       fetchComments(postId, authAxios, params),
     initialParams: { page: 1, pageSize: 6 },
@@ -286,7 +290,7 @@ export const useUpdateAlbatalkComment = () => {
 
       // 무한 스크롤 댓글 쿼리도 무효화
       queryClient.invalidateQueries({
-        queryKey: ['albatalk', 'comments', postId, 'infinite'],
+        queryKey: albatalkKeys.commentsInfinite(postId),
       });
     },
     onError: error => {
@@ -318,7 +322,7 @@ export const useDeleteAlbatalkComment = () => {
 
       // 무한 스크롤 댓글 쿼리도 무효화
       queryClient.invalidateQueries({
-        queryKey: ['albatalk', 'comments', postId, 'infinite'],
+        queryKey: albatalkKeys.commentsInfinite(postId),
       });
 
       // 게시글 상세 정보도 무효화 (댓글 수 업데이트를 위해)
