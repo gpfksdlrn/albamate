@@ -168,8 +168,8 @@ export const useUpdateApplicationStatusMutation = (
     },
     // 단순한 낙관적 업데이트
     onMutate: async ({ applicationId, status }) => {
-      // 모든 관련 쿼리 취소
-      await queryClient.cancelQueries();
+      await queryClient.cancelQueries({ queryKey: ['applicationById'] });
+      await queryClient.cancelQueries({ queryKey: ['myApplication'] });
 
       // 업데이트 함수
       const updateData = (
