@@ -59,7 +59,7 @@ type InfiniteScrollMode = 'cursor' | 'page';
 
 interface UseInfiniteScrollOptions<T, P> {
   mode: InfiniteScrollMode;
-  queryKey: (string | number)[];
+  queryKey: readonly unknown[];
   fetcher: (params: P) => Promise<CursorResponse<T> | PageResponse<T>>;
   initialParams: P;
   enabled?: boolean;

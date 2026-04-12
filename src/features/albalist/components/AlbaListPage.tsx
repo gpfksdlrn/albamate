@@ -49,9 +49,8 @@ const AlbaListPage = ({ session }: { session: Session | null }) => {
     [filters]
   );
 
-  // queryKey에서 객체를 문자열로 변환
   const queryKey = useMemo(
-    () => ['albaList', 'infinite', JSON.stringify(apiParams)],
+    () => ['albaList', 'infinite', apiParams] as const,
     [apiParams]
   );
 
