@@ -1,7 +1,7 @@
 'use client';
 
 import AlbaCardItem from '@common/list/AlbaCardItem';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -24,37 +24,23 @@ const AlbaCard = ({ item }: Props) => {
   const { showPopup } = usePopupStore();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: detailData } = useQuery({
+    queryKey: ['albaDetail', item.id],
+    queryFn: () => getAlbaDetail(item.id).then(res => res.data),
+  });
+
   const [isScrapped, setIsScrapped] = useState(false);
   const [localScrapCount, setLocalScrapCount] = useState(item.scrapCount);
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchScrapStatus = async () => {
-      try {
-        const res = await getAlbaDetail(item.id);
-        if (isMounted) {
-          setIsScrapped(res.data.isScrapped);
-          setLocalScrapCount(res.data.scrapCount);
-        }
-      } catch (err) {
-        console.error('스크랩 상태 불러오기 실패:', err);
-      }
-    };
-    fetchScrapStatus();
-    return () => {
-      isMounted = false;
-    };
-  }, [item.id, getAlbaDetail]);
-
-  const handleCardClick = async () => {
-    try {
-      await queryClient.prefetchQuery({
-        queryKey: ['albaDetail', item.id],
-        queryFn: () => getAlbaDetail(item.id).then(res => res.data),
-      });
-    } catch (err) {
-      console.error('프리패치 실패:', err);
+    if (detailData && !isLoading) {
+      setIsScrapped(detailData.isScrapped);
+      setLocalScrapCount(detailData.scrapCount);
     }
+  }, [detailData, isLoading]);
+
+  const handleCardClick = () => {
     router.push(`/alba/${item.id}`);
   };
 
