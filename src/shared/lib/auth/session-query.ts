@@ -83,8 +83,6 @@ export function useSessionQuery() {
     queryKey: SESSION_QUERY_KEYS.session,
     queryFn: () => Promise.resolve(session),
     enabled: status !== 'loading',
-    staleTime: 5 * 60 * 1000, // 5분
-    gcTime: 10 * 60 * 1000, // 10분
   });
 }
 
@@ -130,7 +128,6 @@ export function useUserQuery() {
     queryKey: SESSION_QUERY_KEYS.user,
     queryFn: () => Promise.resolve(session?.user || null),
     enabled: !!session?.user,
-    staleTime: 5 * 60 * 1000,
   });
 }
 

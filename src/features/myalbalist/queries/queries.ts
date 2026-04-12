@@ -26,8 +26,7 @@ export const useApplicantMyAlbalistQuery = (
     enabled: status === 'authenticated' && userRole === 'APPLICANT',
     staleTime: 30000,
     gcTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: true, // true로 변경
+    refetchOnMount: true,
   });
 };
 
@@ -53,8 +52,7 @@ export const useOwnerMyAlbalistQuery = (
     enabled: status === 'authenticated' && userRole === 'OWNER',
     staleTime: 30000,
     gcTime: 5 * 60 * 1000,
-    refetchOnWindowFocus: false,
-    refetchOnMount: true, // true로 변경
+    refetchOnMount: true,
   });
 };
 

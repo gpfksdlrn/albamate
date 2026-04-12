@@ -29,7 +29,6 @@ export const useAlbalistQuery = (params: AlbaQueryParams = { limit: 10 }) => {
     enabled: true, // 무조건 요청 실행
     staleTime: 30_000,
     gcTime: 5 * 60_000,
-    refetchOnWindowFocus: false,
     refetchOnMount: false,
   });
 };

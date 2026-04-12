@@ -12,11 +12,8 @@ import { AlbaItemDetail } from '@/shared/types/albaDetail';
 import { useApplicationDetailApi } from '../api/applicationDetail';
 
 const DEFAULT_QUERY_OPTIONS = {
-  retry: 1,
-  retryDelay: 1000,
   staleTime: 30000,
-  gcTime: 5 * 60 * 1000, // 5분 동안 캐시 유지
-  refetchOnWindowFocus: false,
+  gcTime: 5 * 60 * 1000,
   refetchOnMount: false,
 };
 

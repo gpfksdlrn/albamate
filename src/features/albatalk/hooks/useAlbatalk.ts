@@ -44,8 +44,6 @@ export const useAlbatalks = (params: GetAlbatalksParams) => {
   return useQuery({
     queryKey: albatalkKeys.list(params),
     queryFn: () => fetchAlbatalks(params),
-    staleTime: 1000 * 60 * 5, // 5분
-    gcTime: 1000 * 60 * 10, // 10분
   });
 };
 
@@ -63,8 +61,6 @@ export const useAlbatalkDetail = (
     queryKey: albatalkKeys.detail(postId),
     queryFn: () => fetchAlbatalkDetail(postId, authAxios),
     enabled: options?.enabled !== false,
-    staleTime: 1000 * 60 * 5, // 5분
-    gcTime: 1000 * 60 * 10, // 10분
   });
 };
 
@@ -215,8 +211,6 @@ export const useAlbatalkComments = (
     queryKey: albatalkKeys.commentsList(postId, params),
     queryFn: () => fetchComments(postId, authAxios, params),
     enabled: !isSessionLoading && hasAccessToken,
-    staleTime: 1000 * 60 * 5, // 5분
-    gcTime: 1000 * 60 * 10, // 10분
   });
 };
 
