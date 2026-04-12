@@ -36,10 +36,6 @@ const AlbaPage = () => {
   } = useQuery({
     queryKey: ['albaDetail', Number(formId)],
     queryFn: () => getAlbaDetail(Number(formId)).then(res => res.data),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 10,
-    refetchOnWindowFocus: true,
-    refetchOnMount: true,
   });
 
   useEffect(() => setHasMounted(true), []);
