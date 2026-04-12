@@ -58,7 +58,7 @@ export default function KakaoMap({ location }: KakaoMapProps) {
     }
 
     const script = document.createElement('script');
-    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&libraries=services&autoload=false`;
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`;
     script.async = true;
 
     script.onload = () => {
