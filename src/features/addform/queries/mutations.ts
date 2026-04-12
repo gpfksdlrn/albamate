@@ -24,10 +24,9 @@ export const useAddformMutation = () => {
         );
         return;
       }
-      queryClient.setQueryData(
-        ['albaDetail', parseResponse.data.id],
-        parseResponse.data
-      );
+      queryClient.invalidateQueries({
+        queryKey: ['albaDetail', parseResponse.data.id],
+      });
       queryClient.invalidateQueries({ queryKey: ['Albalist'] });
       router.push(`/alba/${parseResponse.data.id}`);
     },
@@ -58,10 +57,9 @@ export const useEditformMutation = () => {
         );
         return;
       }
-      queryClient.setQueryData(
-        ['albaDetail', parseResponse.data.id],
-        parseResponse.data
-      );
+      queryClient.invalidateQueries({
+        queryKey: ['albaDetail', parseResponse.data.id],
+      });
       queryClient.invalidateQueries({ queryKey: ['Albalist'] });
       router.push(`/alba/${parseResponse.data.id}`);
     },
