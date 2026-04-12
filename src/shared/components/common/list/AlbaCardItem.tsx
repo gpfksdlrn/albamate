@@ -4,7 +4,6 @@ import { getPublicLabel, getStatusLabel } from '@common/chip/label';
 import AlbaDropdown from '@common/list/AlbaDropdown';
 import { differenceInCalendarDays } from 'date-fns';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { useRef, useState } from 'react';
 
 import { OwnerMyAlbaItem } from '@/features/myalbalist/types/myalbalist';
@@ -25,7 +24,6 @@ interface Props {
   item: AlbaItem | OwnerMyAlbaItem;
   onClick: () => void;
   dropdownOptions: DropdownOption[];
-  isScrapped?: boolean; // 새로 추가
 }
 
 /**
@@ -39,12 +37,7 @@ interface Props {
  * <AlbaCard key={`${item.id}-${item.recruitmentEndDate}`} item={item} />
  *
  */
-const AlbaCardItem = ({
-  item,
-  onClick,
-  dropdownOptions,
-  isScrapped,
-}: Props) => {
+const AlbaCardItem = ({ item, onClick, dropdownOptions }: Props) => {
   const {
     title,
     isPublic,
@@ -60,7 +53,6 @@ const AlbaCardItem = ({
   const [open, setOpen] = useState(false);
   const dDay = differenceInCalendarDays(recruitmentEndDate, new Date());
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const pathname = usePathname();
   const { isOwner } = useSessionUtils();
 
   useClickOutside(dropdownRef, () => setOpen(false));
@@ -87,8 +79,6 @@ const AlbaCardItem = ({
       isDeadline: true,
     },
   ];
-
-  const isIcon = !isOwner && !pathname.includes('my');
 
   return (
     <div
@@ -133,26 +123,8 @@ const AlbaCardItem = ({
       </span>
 
       <div className="mt-12 ml-4 flex items-center">
-        <div className="flex min-w-0 items-center">
-          <div className="mr-4 min-w-0">
-            <TitleMarquee title={title} />
-          </div>
-          {isIcon &&
-            (isScrapped ? (
-              <Image
-                alt="스크랩 완료"
-                height={24}
-                src="/icons/bookmark-mint.svg"
-                width={24}
-              />
-            ) : (
-              <Image
-                alt="스크랩 안됨"
-                height={24}
-                src="/icons/bookmark-gray.svg"
-                width={24}
-              />
-            ))}
+        <div className="mr-4 min-w-0">
+          <TitleMarquee title={title} />
         </div>
       </div>
 
