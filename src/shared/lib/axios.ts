@@ -7,9 +7,6 @@ const TEAM_ID = process.env.NEXT_PUBLIC_TEAM_ID || '15-3';
 
 const baseURL = `${API_URL}${TEAM_ID}/`;
 
-// 개발 환경에서는 withCredentials 비활성화
-const isDevelopment = process.env.NODE_ENV === 'development';
-
 // 토큰 갱신 중인지 확인하는 플래그
 let isRefreshing = false;
 // 토큰 갱신 대기 중인 요청들을 저장하는 배열
@@ -118,7 +115,6 @@ const createResponseInterceptor = (instance: AxiosInstance) => ({
 
 export const axiosInstance = axios.create({
   baseURL,
-  withCredentials: !isDevelopment,
 });
 
 // 공통 인터셉터 적용
