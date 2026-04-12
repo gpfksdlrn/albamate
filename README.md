@@ -21,7 +21,7 @@
 > 💬 "내게 맞는 알바, 지금 바로 매칭해보세요!"
 <br/>
 
-➡ &nbsp; [🚀 배포 사이트](https://albamate.vercel.app/) | [🎥 시연 영상](https://www.youtube.com/watch?v=e7vMwgAApZs&t=1s) | [📊 발표 PPT](https://www.canva.com/design/DAGuoEOoR3Y/paY76hDWiTLi5LH1wV9XCw/edit) | [📡 API 문서](https://fe-project-albaform.vercel.app/docs/) | [기획 노션](https://www.notion.so/turtle-dev/4-3-2293c30f0aa08017b90bed0011ca4746)
+➡ &nbsp; [🚀 배포 사이트](https://albamate-bice.vercel.app/) | [🎥 시연 영상](https://www.youtube.com/watch?v=e7vMwgAApZs&t=1s) | [📊 발표 PPT](https://www.canva.com/design/DAGuoEOoR3Y/paY76hDWiTLi5LH1wV9XCw/edit) | [📡 API 문서](https://fe-project-albaform.vercel.app/docs/) | [기획 노션](https://www.notion.so/turtle-dev/4-3-2293c30f0aa08017b90bed0011ca4746)
 
 ---
 
