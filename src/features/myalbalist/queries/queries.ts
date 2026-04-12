@@ -21,8 +21,6 @@ export const useApplicantMyAlbalistQuery = (
         throw error;
       }
     },
-    retry: 1,
-    retryDelay: 1000,
     enabled: status === 'authenticated' && userRole === 'APPLICANT',
     staleTime: 30000,
     gcTime: 5 * 60 * 1000,
@@ -47,8 +45,6 @@ export const useOwnerMyAlbalistQuery = (
         throw error;
       }
     },
-    retry: 1,
-    retryDelay: 1000,
     enabled: status === 'authenticated' && userRole === 'OWNER',
     staleTime: 30000,
     gcTime: 5 * 60 * 1000,
