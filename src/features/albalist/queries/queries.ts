@@ -18,7 +18,7 @@ export const albaKeys = {
   all: ['alba'] as const,
   lists: () => [...albaKeys.all, 'list'] as const,
   list: (params: AlbaQueryParams) => [...albaKeys.lists(), params] as const,
-  listInfinite: (params: Record<string, unknown>) =>
+  listInfinite: (params: AlbaQueryParams) =>
     [...albaKeys.lists(), 'infinite', params] as const,
   details: () => [...albaKeys.all, 'detail'] as const,
   detail: (id: number) => [...albaKeys.details(), id] as const,
