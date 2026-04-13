@@ -3,9 +3,11 @@ import type { User as CustomUser } from '@/features/auth';
 declare module 'next-auth' {
   interface Session {
     user: CustomUser;
-    accessToken: string;
-    refreshToken: string;
+    accessToken?: string;
+    refreshToken?: string;
     error?: 'RefreshAccessTokenError';
+    isOAuthRegistering?: boolean;
+    oauthToken?: string;
   }
 
   interface User {
@@ -31,5 +33,8 @@ declare module 'next-auth/jwt' {
     id: string; // User의 number 타입을 string으로 오버라이드
     accessTokenExpires: number; // User의 optional 타입을 required로 오버라이드
     error?: 'RefreshAccessTokenError';
+    isOAuthRegistering?: boolean;
+    oauthToken?: string;
+    oauthProvider?: string;
   }
 }

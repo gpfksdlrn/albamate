@@ -1,20 +1,14 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+
+const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID!;
 
 const AuthSns = () => {
-  const searchParams = useSearchParams();
-  const userType = searchParams.get('type') || 'applicant';
-
   const handleKakaoSignIn = () => {
-    const callbackUrl = `${window.location.origin}/signin?type=${userType}`;
-
-    signIn('kakao', {
-      callbackUrl,
-      redirect: true,
-    });
+    const redirectUri = `${window.location.origin}/oauth/kakao`;
+    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code`;
+    window.location.href = kakaoAuthUrl;
   };
 
   return (

@@ -4,17 +4,11 @@ import {
   Session,
   User,
 } from 'next-auth';
-import { type AdapterUser } from 'next-auth/adapters';
 import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials';
-import KakaoProvider from 'next-auth/providers/kakao';
 
 export const authConfig = {
   providers: [
-    KakaoProvider({
-      clientId: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID,
-      clientSecret: process.env.KAKAO_CLIENT_SECRET,
-    }),
     Credentials({
       id: 'credentials',
       name: 'credentials',
@@ -138,13 +132,41 @@ export const authConfig = {
         }
       },
     }),
+    // 카카오 OAuth 회원가입 완료 후 세션 생성용 provider
+    Credentials({
+      id: 'kakao-register',
+      credentials: {
+        accessToken: { type: 'text' },
+        refreshToken: { type: 'text' },
+        userDataJson: { type: 'text' },
+      },
+      authorize: async (credentials): Promise<User | null> => {
+        if (!credentials?.accessToken || !credentials?.userDataJson)
+          return null;
+        const userData = JSON.parse(credentials.userDataJson as string);
+        return {
+          id: userData.id,
+          email: userData.email,
+          name: userData.name,
+          nickname: userData.nickname,
+          role: userData.role,
+          phoneNumber: userData.phoneNumber,
+          location: userData.location,
+          storeName: userData.storeName,
+          storePhoneNumber: userData.storePhoneNumber,
+          imageUrl: userData.imageUrl,
+          accessToken: credentials.accessToken as string,
+          refreshToken: credentials.refreshToken as string,
+        };
+      },
+    }),
   ],
   session: {
     strategy: 'jwt',
     maxAge: 24 * 60 * 60, // 24시간
   },
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user: User | AdapterUser }) {
+    async jwt({ token, user }) {
       // 초기 로그인 시 사용자 정보 저장
       if (user) {
         token.location = user.location;
