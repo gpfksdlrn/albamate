@@ -12,9 +12,11 @@ import OwnerButtons from './OwnerButtons';
 interface ApplyButtonProps {
   isOwner: boolean;
   id: number;
+  recruitmentEndDate: string;
 }
 
-const ApplyButton = ({ isOwner, id }: ApplyButtonProps) => {
+const ApplyButton = ({ isOwner, id, recruitmentEndDate }: ApplyButtonProps) => {
+  const isClosed = new Date(recruitmentEndDate) < new Date();
   const { openModal } = useModalStore();
   const router = useRouter();
   const { isTablet, isMobile } = useViewport();
@@ -52,6 +54,7 @@ const ApplyButton = ({ isOwner, id }: ApplyButtonProps) => {
         />
       ) : (
         <ApplicantButtons
+          isClosed={isClosed}
           isSmall={isSmallScreen}
           onApply={handleApply}
           onViewApplication={handleViewApplication}

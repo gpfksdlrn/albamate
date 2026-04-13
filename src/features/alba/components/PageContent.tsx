@@ -46,7 +46,11 @@ const PageContent = ({ item, isOwner }: PageContentProps) => {
         </div>
 
         {/* Apply 버튼은 화면 크기에 따라 자동 분기 */}
-        <ApplyButton id={item.id} isOwner={isOwner} />
+        <ApplyButton
+          id={item.id}
+          isOwner={isOwner}
+          recruitmentEndDate={item.recruitmentEndDate}
+        />
 
         <AlbaCondition item={item} />
       </div>
