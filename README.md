@@ -23,6 +23,18 @@
 
 ➡ &nbsp; [🚀 배포 사이트](https://albamate-bice.vercel.app/) | [🎥 시연 영상](https://www.youtube.com/watch?v=e7vMwgAApZs&t=1s) | [📊 발표 PPT](https://www.canva.com/design/DAGuoEOoR3Y/paY76hDWiTLi5LH1wV9XCw/edit) | [📡 API 문서](https://fe-project-albaform.vercel.app/docs/) | [기획 노션](https://www.notion.so/turtle-dev/4-3-2293c30f0aa08017b90bed0011ca4746)
 
+<br/>
+
+🔑 **테스트 계정** (※ 실제 사용자 계정이 아닌, 데모 체험을 위한 계정입니다.)
+
+🏪 사장님 계정
+- ID: admin1234@gmail.com
+- PW: qwe123!@#
+
+👤 지원자 계정
+- ID: user1234@gmail.com
+- PW: qwe123!@#
+  
 ---
 
 ## <img width="22" height="22" alt="image" src="https://github.com/user-attachments/assets/e3e1b0e4-fe40-43c4-b9c0-ed552afe4227" /> &nbsp;주요 기능 (MVP)
